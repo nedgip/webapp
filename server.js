@@ -1,3 +1,4 @@
+// If environment is not production use .env config
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
@@ -6,6 +7,8 @@ const express = require("express");
 const app = express();
 const expressLayouts = require("express-ejs-layouts");
 const indexRouter = require("./routes/index");
+const authorRouter = require("./routes/authors");
+const bodyParser = require("body-parser");
 
 // Express configuration
 // Set ejs as the view engine
@@ -19,6 +22,8 @@ app.set("layout", "layouts/layout");
 app.use(expressLayouts);
 // Tell the app that we will  store static files such as css and js in public
 app.use(express.static("public"));
+//
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }));
 
 // Mongodb - Mongoose configuration
 const mongoose = require("mongoose");
@@ -32,6 +37,7 @@ db.once("open", () => console.log("Connected to Mongoose"));
 
 // Tell the app that to use indexRouter which maps to index.js in our routes folder
 app.use("/", indexRouter);
+app.use("/authors", authorRouter);
 
 // Server listen to production or localhost: 3000
 app.listen(process.env.PORT || 3000);
