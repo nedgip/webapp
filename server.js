@@ -25,7 +25,9 @@ const mongoose = require("mongoose");
 // Connect to mongodb, we get the database urls from environment variables
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 const db = mongoose.connection;
+// If connection fails throw an error
 db.on("error", (error) => console.error(error));
+// If connection is successful log a success message
 db.once("open", () => console.log("Connected to Mongoose"));
 
 // Tell the app that to use indexRouter which maps to index.js in our routes folder
