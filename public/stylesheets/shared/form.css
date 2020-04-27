@@ -63,7 +63,7 @@
 .form-item input:focus,
 .form-item select:focus,
 .form-item textarea:focus {
-  border-color: var(--form-input-border-color-light);
+  outline: 3px solid white;
 }
 
 .filepond--root {
